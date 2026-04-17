@@ -454,6 +454,10 @@ const SubtitleEditor = (function() {
     function exportSubtitles(format = 'srt', filename = 'subtitles') {
         if (format === 'json') {
             Utils.downloadFile(getJSON(), `${filename}.json`, 'application/json');
+        } else if (format === 'txt') {
+            // Plain text export - just the text content
+            const textContent = subtitles.map(s => s.text).join('\n\n');
+            Utils.downloadFile(textContent, `${filename}.txt`, 'text/plain');
         } else {
             Utils.downloadFile(getSRT(), `${filename}.srt`, 'text/plain');
         }

@@ -17,7 +17,14 @@
             <button id="about-btn" class="btn-icon" title="About">ℹ️</button>
             <button id="theme-toggle" class="btn-icon" title="Toggle Theme">🌙</button>
             <button id="logout-btn" class="btn-icon" title="Logout">🚪</button>
-            <button id="export-btn" class="btn-primary">Export SRT</button>
+            <div class="export-dropdown">
+                <button id="export-btn" class="btn-primary">Export ▼</button>
+                <div class="export-menu" id="export-menu">
+                    <a href="#" id="export-srt">📄 Export as SRT</a>
+                    <a href="#" id="export-json">📋 Export as JSON</a>
+                    <a href="#" id="export-txt">📝 Export as TXT</a>
+                </div>
+            </div>
         </div>
     </header>
 

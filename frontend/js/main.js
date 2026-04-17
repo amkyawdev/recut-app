@@ -23,6 +23,7 @@ const App = (function() {
         initAboutModal();
         initLogout();
         initSubtitleStyle();
+        initExportDropdown();
         initVideoPlayer();
         initSubtitleEditor();
         initFileUpload();
@@ -474,6 +475,18 @@ const App = (function() {
      * Handle export button
      */
     function handleExport() {
+        // Toggle dropdown menu
+        const exportMenu = document.getElementById('export-menu');
+        if (exportMenu) {
+            exportMenu.classList.toggle('show');
+        }
+    }
+
+    /**
+     * Handle SRT export
+     */
+    function handleExportSRT(e) {
+        e.preventDefault();
         const subtitles = SubtitleEditor.getSubtitles();
         if (subtitles.length === 0) {
             Utils.showToast('No subtitles to export', 'error');
@@ -481,6 +494,65 @@ const App = (function() {
         }
         
         SubtitleEditor.exportSubtitles('srt', 'edited-subtitles');
+        document.getElementById('export-menu').classList.remove('show');
+    }
+
+    /**
+     * Handle JSON export
+     */
+    function handleExportJSON(e) {
+        e.preventDefault();
+        const subtitles = SubtitleEditor.getSubtitles();
+        if (subtitles.length === 0) {
+            Utils.showToast('No subtitles to export', 'error');
+            return;
+        }
+        
+        SubtitleEditor.exportSubtitles('json', 'edited-subtitles');
+        document.getElementById('export-menu').classList.remove('show');
+    }
+
+    /**
+     * Handle TXT export
+     */
+    function handleExportTXT(e) {
+        e.preventDefault();
+        const subtitles = SubtitleEditor.getSubtitles();
+        if (subtitles.length === 0) {
+            Utils.showToast('No subtitles to export', 'error');
+            return;
+        }
+        
+        SubtitleEditor.exportSubtitles('txt', 'edited-subtitles');
+        document.getElementById('export-menu').classList.remove('show');
+    }
+
+    /**
+     * Initialize export dropdown
+     */
+    function initExportDropdown() {
+        const exportBtn = document.getElementById('export-btn');
+        const exportMenu = document.getElementById('export-menu');
+        
+        if (exportBtn) {
+            exportBtn.addEventListener('click', handleExport);
+        }
+        
+        // Export menu items
+        const exportSrt = document.getElementById('export-srt');
+        const exportJson = document.getElementById('export-json');
+        const exportTxt = document.getElementById('export-txt');
+        
+        if (exportSrt) exportSrt.addEventListener('click', handleExportSRT);
+        if (exportJson) exportJson.addEventListener('click', handleExportJSON);
+        if (exportTxt) exportTxt.addEventListener('click', handleExportTXT);
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (exportMenu && !e.target.closest('.export-dropdown')) {
+                exportMenu.classList.remove('show');
+            }
+        });
     }
 
     /**
