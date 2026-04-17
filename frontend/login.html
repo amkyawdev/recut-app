@@ -397,6 +397,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-auth.js"></script>
     
     <script>
         // Firebase Config
@@ -413,8 +414,10 @@
 
         window.firebaseConfig = firebaseConfig;
 
-        // Initialize Firebase
-        FirebaseAuth.initFirebase();
+        // Initialize Firebase - run AFTER SDK loads
+        document.addEventListener('DOMContentLoaded', function() {
+            FirebaseAuth.initFirebase();
+        });
 
         // Tab switching
         function showTab(tabName) {
@@ -543,7 +546,5 @@
             }
         });
     </script>
-
-    <script src="js/firebase-auth.js"></script>
 </body>
 </html>
