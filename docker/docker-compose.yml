@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: burme-transcript-backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - uploads-data:/app/backend/uploads
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  uploads-data:
+    driver: local
+
+# Uncomment for development
+# dev:
+#   build:
+#     context: ..
+#     dockerfile: docker/Dockerfile
+#   volumes:
+#     - ..:/app
+#   command: npm run dev
+#   ports:
+#     - "3000:3000"
+#     - "3001:3001"
+#   environment:
+#     - NODE_ENV=development

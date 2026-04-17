@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burme Transcript App</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/player.css">
+</head>
+<body>
+    <header class="app-header">
+        <div class="logo">
+            <span class="logo-icon">🎬</span>
+            <h1>Burme Transcript</h1>
+        </div>
+        <div class="header-actions">
+            <button id="theme-toggle" class="btn-icon" title="Toggle Theme">🌙</button>
+            <button id="export-btn" class="btn-primary">Export SRT</button>
+        </div>
+    </header>
+
+    <main class="app-container">
+        <!-- Left Panel: File Manager -->
+        <aside class="panel file-manager">
+            <div class="panel-header">
+                <h2>Files</h2>
+                <button id="add-files-btn" class="btn-icon" title="Add Files">+</button>
+            </div>
+            
+            <div class="upload-section">
+                <div class="upload-zone" id="video-upload-zone">
+                    <span class="upload-icon">📹</span>
+                    <span>Drop video here</span>
+                    <input type="file" id="video-input" accept="video/mp4,video/webm,video/quicktime">
+                </div>
+                <div class="upload-zone" id="subtitle-upload-zone">
+                    <span class="upload-icon">📄</span>
+                    <span>Drop SRT here</span>
+                    <input type="file" id="subtitle-input" accept=".srt">
+                </div>
+            </div>
+
+            <div class="file-list" id="file-list">
+                <div class="file-category">
+                    <h3>Videos</h3>
+                    <ul id="video-list"></ul>
+                </div>
+                <div class="file-category">
+                    <h3>Subtitles</h3>
+                    <ul id="subtitle-list"></ul>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Center Panel: Video Player + Editor -->
+        <section class="panel video-editor">
+            <div class="video-container">
+                <video id="video-player" controls>
+                    Your browser does not support HTML5 video.
+                </video>
+                <div class="subtitle-overlay" id="subtitle-overlay"></div>
+            </div>
+
+            <div class="editor-panel">
+                <div class="editor-header">
+                    <h2>Subtitle Editor</h2>
+                    <div class="editor-controls">
+                        <button id="sync-btn" class="btn-secondary">Sync</button>
+                        <button id="add-subtitle-btn" class="btn-secondary">+ Add</button>
+                    </div>
+                </div>
+                
+                <div class="current-subtitle">
+                    <div class="timecode-inputs">
+                        <div class="timecode-group">
+                            <label>Start</label>
+                            <input type="text" id="start-time" class="timecode" placeholder="00:00:00,000">
+                        </div>
+                        <div class="timecode-group">
+                            <label>End</label>
+                            <input type="text" id="end-time" class="timecode" placeholder="00:00:00,000">
+                        </div>
+                    </div>
+                    <textarea id="subtitle-text" placeholder="Enter subtitle text..."></textarea>
+                    <div class="subtitle-actions">
+                        <button id="save-subtitle-btn" class="btn-primary">Save</button>
+                        <button id="split-subtitle-btn" class="btn-secondary">Split</button>
+                        <button id="merge-subtitle-btn" class="btn-secondary">Merge</button>
+                    </div>
+                </div>
+
+                <div class="offset-control">
+                    <label>Time Offset:</label>
+                    <input type="range" id="offset-slider" min="-5000" max="5000" value="0">
+                    <span id="offset-value">0ms</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Panel: Subtitle List -->
+        <aside class="panel subtitle-list">
+            <div class="panel-header">
+                <h2>Subtitles</h2>
+                <div class="subtitle-info">
+                    <span id="subtitle-count">0</span> lines
+                </div>
+            </div>
+            
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Search subtitles...">
+            </div>
+
+            <ul id="subtitle-items" class="subtitle-items">
+                <!-- Subtitles will be populated here -->
+            </ul>
+        </aside>
+    </main>
+
+    <!-- Hidden file inputs for upload zones -->
+    <input type="file" id="hidden-video-input" accept="video/*" style="display:none">
+    <input type="file" id="hidden-subtitle-input" accept=".srt" multiple style="display:none">
+
+    <script src="js/srt-parser.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/subtitle-editor.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
