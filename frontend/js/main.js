@@ -186,9 +186,42 @@ const App = (function() {
      * Initialize Subtitle Style Controls
      */
     function initSubtitleStyle() {
+        const styleEditorBtn = document.getElementById('style-editor-btn');
+        const styleModal = document.getElementById('style-modal');
+        const styleModalClose = document.getElementById('style-modal-close');
         const applyStyleBtn = document.getElementById('apply-style-btn');
+        
+        // Open modal
+        if (styleEditorBtn && styleModal) {
+            styleEditorBtn.addEventListener('click', () => {
+                styleModal.classList.add('show');
+            });
+        }
+        
+        // Close modal
+        if (styleModalClose && styleModal) {
+            styleModalClose.addEventListener('click', () => {
+                styleModal.classList.remove('show');
+            });
+        }
+        
+        // Close on outside click
+        if (styleModal) {
+            styleModal.addEventListener('click', (e) => {
+                if (e.target === styleModal) {
+                    styleModal.classList.remove('show');
+                }
+            });
+        }
+        
+        // Apply style
         if (applyStyleBtn) {
-            applyStyleBtn.addEventListener('click', applySubtitleStyle);
+            applyStyleBtn.addEventListener('click', () => {
+                applySubtitleStyle();
+                if (styleModal) {
+                    styleModal.classList.remove('show');
+                }
+            });
         }
         
         // Load saved style
