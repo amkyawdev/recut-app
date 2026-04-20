@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Burme Transcript</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/modern.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            min-height: 100vh;
+            background: var(--bg-primary);
+        }
+        .auth-container {
+            width: 100%;
+            max-width: 420px;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .auth-logo .logo-icon {
+            font-size: 64px;
+            display: block;
+            animation: float 3s ease-in-out infinite;
+            margin-bottom: 16px;
+        }
+        .auth-logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .auth-tabs {
+            display: flex;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-lg);
+            padding: 4px;
+            margin-bottom: 24px;
+        }
+        .auth-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+            border: none;
+            background: transparent;
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 600;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        .auth-tab.active {
+            background: var(--gradient-primary);
+            color: white;
+        }
+        .auth-form {
+            display: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            padding: 28px;
+        }
+        .auth-form.active {
+            display: block;
+            animation: fadeInUp 0.4s ease forwards;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 14px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+        .password-input {
+            position: relative;
+        }
+        .password-input input {
+            padding-right: 48px;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--text-muted);
+            background: none;
+            border: none;
+            font-size: 16px;
+        }
+        .btn-auth {
+            width: 100%;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 8px;
+        }
+        .btn-auth:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+        .btn-auth:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .auth-divider {
+            text-align: center;
+            margin: 20px 0;
+            color: var(--text-muted);
+            font-size: 13px;
+            position: relative;
+        }
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: var(--border-color);
+        }
+        .auth-divider::before { left: 0; }
+        .auth-divider::after { right: 0; }
+        .btn-google {
+            background: #fff;
+            color: #333;
+            border: 1px solid #e5e5e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-google:hover {
+            background: #f5f5f5;
+            transform: none;
+            box-shadow: none;
+        }
+        .auth-link {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        .auth-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .auth-link a:hover {
+            text-decoration: underline;
+        }
+        .auth-message {
+            padding: 14px;
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+            font-size: 14px;
+            display: none;
+        }
+        .auth-message.show {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+        .auth-message.success {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+        }
+        .auth-message.error {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+        }
+        .back-home {
+            text-align: center;
+            margin-top: 24px;
+        }
+        .back-home a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .back-home a:hover {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container glass-card">
+        <div class="auth-logo">
+            <span class="logo-icon"><i class="bi bi-film"></i></span>
+            <h1>Burme Transcript</h1>
+        </div>
+
+        <div class="auth-tabs">
+            <a href="login.html" class="auth-tab"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+            <a href="register.html" class="auth-tab active"><i class="bi bi-person-plus"></i> Register</a>
+        </div>
+
+        <form id="register-form" class="auth-form active">
+            <div id="register-message" class="auth-message"></div>
+            
+            <div class="form-group">
+                <label for="register-name"><i class="bi bi-person"></i> Full Name</label>
+                <input type="text" id="register-name" placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="register-email"><i class="bi bi-envelope"></i> Email</label>
+                <input type="email" id="register-email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="register-password"><i class="bi bi-lock"></i> Password</label>
+                <div class="password-input">
+                    <input type="password" id="register-password" placeholder="Create a password" required>
+                    <button type="button" class="toggle-password" onclick="togglePassword('register-password')"><i class="bi bi-eye"></i></button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="register-confirm"><i class="bi bi-lock-fill"></i> Confirm Password</label>
+                <div class="password-input">
+                    <input type="password" id="register-confirm" placeholder="Confirm your password" required>
+                    <button type="button" class="toggle-password" onclick="togglePassword('register-confirm')"><i class="bi bi-eye"></i></button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-auth" id="register-btn"><i class="bi bi-person-plus"></i> Register</button>
+
+            <div class="auth-link">
+                Already have an account? <a href="login.html">Login here</a>
+            </div>
+        </form>
+
+        <div class="back-home">
+            <a href="dashboard.html"><i class="bi bi-house"></i> Back to Dashboard</a>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-auth.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCcw0_7Pc4tIAapg-Hyvk4UtiQfo1USjU8",
+            authDomain: "amk-apk.firebaseapp.com",
+            databaseURL: "https://amk-apk-default-rtdb.firebaseio.com",
+            projectId: "amk-apk",
+            storageBucket: "amk-apk.firebasestorage.app",
+            messagingSenderId: "267632318274",
+            appId: "1:267632318274:android:441e4b8cb66da60d04dadb"
+        };
+        window.firebaseConfig = firebaseConfig;
+
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            input.type = input.type === 'password' ? 'text' : 'password';
+        }
+
+        function showMessage(message, isSuccess) {
+            const msgEl = document.getElementById('register-message');
+            msgEl.textContent = message;
+            msgEl.className = `auth-message show ${isSuccess ? 'success' : 'error'}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            FirebaseAuth.initFirebase();
+            
+            FirebaseAuth.getCurrentUser().then(user => {
+                if (user) {
+                    location.href = 'dashboard.html';
+                }
+            });
+        });
+
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('register-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Creating account...';
+
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirm = document.getElementById('register-confirm').value;
+
+            if (password !== confirm) {
+                showMessage('Passwords do not match!', false);
+                btn.disabled = false;
+                btn.innerHTML = '<i class="bi bi-person-plus"></i> Register';
+                return;
+            }
+
+            const result = await FirebaseAuth.register(email, password, name);
+            
+            if (result.success) {
+                showMessage('Account created! Redirecting...', true);
+                setTimeout(() => location.href = 'dashboard.html', 1000);
+            } else {
+                showMessage(result.error, false);
+                btn.disabled = false;
+                btn.innerHTML = '<i class="bi bi-person-plus"></i> Register';
+            }
+        });
+    </script>
+</body>
+</html>

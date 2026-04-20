@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Burme Transcript</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/modern.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            min-height: 100vh;
+            background: var(--bg-primary);
+        }
+        .auth-container {
+            width: 100%;
+            max-width: 420px;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .auth-logo .logo-icon {
+            font-size: 64px;
+            display: block;
+            animation: float 3s ease-in-out infinite;
+            margin-bottom: 16px;
+        }
+        .auth-logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .auth-tabs {
+            display: flex;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-lg);
+            padding: 4px;
+            margin-bottom: 24px;
+        }
+        .auth-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+            border: none;
+            background: transparent;
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 600;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        .auth-tab.active {
+            background: var(--gradient-primary);
+            color: white;
+        }
+        .auth-form {
+            display: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            padding: 28px;
+        }
+        .auth-form.active {
+            display: block;
+            animation: fadeInUp 0.4s ease forwards;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 14px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+        .password-input {
+            position: relative;
+        }
+        .password-input input {
+            padding-right: 48px;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--text-muted);
+            background: none;
+            border: none;
+            font-size: 16px;
+        }
+        .btn-auth {
+            width: 100%;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 8px;
+        }
+        .btn-auth:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+        .btn-auth:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .auth-divider {
+            text-align: center;
+            margin: 20px 0;
+            color: var(--text-muted);
+            font-size: 13px;
+            position: relative;
+        }
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: var(--border-color);
+        }
+        .auth-divider::before { left: 0; }
+        .auth-divider::after { right: 0; }
+        .btn-google {
+            background: #fff;
+            color: #333;
+            border: 1px solid #e5e5e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-google:hover {
+            background: #f5f5f5;
+            transform: none;
+            box-shadow: none;
+        }
+        .auth-link {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        .auth-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .auth-link a:hover {
+            text-decoration: underline;
+        }
+        .auth-message {
+            padding: 14px;
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+            font-size: 14px;
+            display: none;
+        }
+        .auth-message.show {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+        .auth-message.success {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+        }
+        .auth-message.error {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+        }
+        .back-home {
+            text-align: center;
+            margin-top: 24px;
+        }
+        .back-home a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .back-home a:hover {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container glass-card">
+        <div class="auth-logo">
+            <span class="logo-icon"><i class="bi bi-film"></i></span>
+            <h1>Burme Transcript</h1>
+        </div>
+
+        <div class="auth-tabs">
+            <a href="login.html" class="auth-tab active"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+            <a href="register.html" class="auth-tab"><i class="bi bi-person-plus"></i> Register</a>
+        </div>
+
+        <form id="login-form" class="auth-form active">
+            <div id="login-message" class="auth-message"></div>
+            
+            <div class="form-group">
+                <label for="login-email"><i class="bi bi-envelope"></i> Email</label>
+                <input type="email" id="login-email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="login-password"><i class="bi bi-lock"></i> Password</label>
+                <div class="password-input">
+                    <input type="password" id="login-password" placeholder="Enter your password" required>
+                    <button type="button" class="toggle-password" onclick="togglePassword('login-password')"><i class="bi bi-eye"></i></button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-auth" id="login-btn"><i class="bi bi-box-arrow-in-right"></i> Login</button>
+
+            <div class="auth-link">
+                <a href="forgot.html"><i class="bi bi-question-circle"></i> Forgot Password?</a>
+            </div>
+
+            <div class="auth-divider">or</div>
+
+            <button type="button" class="btn-auth btn-google" onclick="loginWithGoogle()">
+                <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.34-1.36-.34-2.09s.12-1.43.34-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                Continue with Google
+            </button>
+        </form>
+
+        <div class="back-home">
+            <a href="dashboard.html"><i class="bi bi-house"></i> Back to Dashboard</a>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-auth.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCcw0_7Pc4tIAapg-Hyvk4UtiQfo1USjU8",
+            authDomain: "amk-apk.firebaseapp.com",
+            databaseURL: "https://amk-apk-default-rtdb.firebaseio.com",
+            projectId: "amk-apk",
+            storageBucket: "amk-apk.firebasestorage.app",
+            messagingSenderId: "267632318274",
+            appId: "1:267632318274:android:441e4b8cb66da60d04dadb"
+        };
+        window.firebaseConfig = firebaseConfig;
+
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            input.type = input.type === 'password' ? 'text' : 'password';
+        }
+
+        function showMessage(message, isSuccess) {
+            const msgEl = document.getElementById('login-message');
+            msgEl.textContent = message;
+            msgEl.className = `auth-message show ${isSuccess ? 'success' : 'error'}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            FirebaseAuth.initFirebase();
+            
+            FirebaseAuth.getCurrentUser().then(user => {
+                if (user) {
+                    location.href = 'dashboard.html';
+                }
+            });
+        });
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('login-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Logging in...';
+
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            const result = await FirebaseAuth.login(email, password);
+            
+            if (result.success) {
+                showMessage('Login successful! Redirecting...', true);
+                setTimeout(() => location.href = 'dashboard.html', 1000);
+            } else {
+                showMessage(result.error, false);
+                btn.disabled = false;
+                btn.innerHTML = '<i class="bi bi-box-arrow-in-right"></i> Login';
+            }
+        });
+
+        async function loginWithGoogle() {
+            const result = await FirebaseAuth.loginWithGoogle();
+            if (result.success) {
+                location.href = 'dashboard.html';
+            } else {
+                showMessage(result.error, false);
+            }
+        }
+    </script>
+</body>
+</html>
