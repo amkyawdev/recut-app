@@ -426,6 +426,14 @@
         
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
+        
+        // Check auth immediately
+        const auth = firebase.auth();
+        auth.onAuthStateChanged(function(user) {
+            if (!user) {
+                window.location.href = 'login.html';
+            }
+        });
     </script>
     <script src="js/firebase-auth.js"></script>
     <script src="js/utils.js"></script>
@@ -433,24 +441,6 @@
     <script src="js/srt-parser.js"></script>
     <script src="js/main.js"></script>
     <script>
-        // Check auth before loading
-        window.addEventListener('load', function() {
-            // Check if firebase auth is available
-            if (typeof firebase !== 'undefined' && firebase.auth) {
-                const auth = firebase.auth();
-                // Check current user immediately
-                const user = auth.currentUser;
-                if (!user) {
-                    // Also listen for auth changes
-                    auth.onAuthStateChanged(function(user) {
-                        if (!user) {
-                            window.location.href = 'login.html';
-                        }
-                    });
-                }
-            }
-        });
-        
         function toggleDeviceFrame(device) {
             document.body.className = '';
             document.body.classList.add('device-' + device);
