@@ -83,17 +83,21 @@
             background: #000;
             border-radius: var(--radius-lg);
             overflow: hidden;
-            min-height: 200px;
+            min-height: 300px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex: 1;
+            z-index: 1;
         }
         #video-player {
             width: 100%;
             height: 100%;
+            max-height: 100%;
             object-fit: contain;
             display: block;
+            z-index: 2;
+            position: relative;
         }
         .video-placeholder {
             position: absolute;
@@ -105,6 +109,10 @@
             align-items: center;
             justify-content: center;
             background: var(--bg-secondary);
+            z-index: 1;
+        }
+        .video-placeholder.hidden {
+            display: none;
         }
         /* Compact Time Inputs */
         .timecode-inputs {
