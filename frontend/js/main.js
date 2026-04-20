@@ -510,8 +510,9 @@ const App = (function() {
         if (!file) return;
         
         // Validate file type
-        const validTypes = ['video/mp4', 'video/webm', 'video/quicktime', 'video/x-msvideo'];
-        if (!validTypes.some(type => file.type.startsWith(type) || file.name.match(/\.(mp4|webm|mov|avi)$/i))) {
+        const validExtensions = ['.mp4', '.webm', '.mov', '.avi', '.mkv'];
+        const hasValidExtension = validExtensions.some(ext => file.name.toLowerCase().endsWith(ext));
+        if (!hasValidExtension) {
             Utils.showToast('Invalid video file type', 'error');
             return;
         }
