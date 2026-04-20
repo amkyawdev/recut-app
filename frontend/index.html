@@ -27,12 +27,12 @@
             gap: 12px;
         }
         .panel.video-editor {
-            flex: 1;
-            min-height: 200px;
+            flex: 0 0 auto;
+            min-height: auto;
         }
         .panel.subtitle-list {
-            flex: 0 0 250px;
-            min-height: 250px;
+            flex: 0 0 200px;
+            min-height: 200px;
         }
         .upload-bar {
             display: flex;
@@ -133,14 +133,19 @@
         .video-placeholder.hidden {
             display: none;
         }
-        /* Video Controls Below */
+        /* Video Controls Inside Container */
         .video-controls {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
             display: flex;
             flex-direction: column;
             gap: 8px;
-            padding: 12px;
-            background: var(--bg-card);
-            border-top: 1px solid var(--border-color);
+            padding: 10px;
+            background: rgba(0,0,0,0.7);
+            border-radius: var(--radius);
+            z-index: 10;
         }
         .video-controls .progress-bar-container {
             display: flex;
@@ -150,38 +155,41 @@
         .video-controls .progress-bar {
             flex: 1;
             height: 6px;
-            background: var(--bg-tertiary);
+            background: rgba(255,255,255,0.3);
             border-radius: 3px;
             cursor: pointer;
         }
         .video-controls .time-display {
-            font-size: 12px;
-            color: var(--text-muted);
-            min-width: 80px;
+            font-size: 11px;
+            color: #fff;
+            min-width: 70px;
         }
         .video-controls .controls-row {
             display: flex;
             align-items: center;
             gap: 8px;
-            justify-content: center;
         }
         .video-controls .control-btn {
             background: none;
             border: none;
-            font-size: 18px;
+            font-size: 16px;
             cursor: pointer;
-            padding: 6px 10px;
+            padding: 4px 8px;
             border-radius: var(--radius);
+            color: #fff;
         }
         .video-controls .control-btn:hover {
-            background: var(--bg-hover);
+            background: rgba(255,255,255,0.2);
         }
         .video-controls .volume-slider {
-            width: 80px;
+            width: 60px;
         }
         .video-controls .speed-selector {
-            padding: 4px 8px;
-            font-size: 12px;
+            padding: 2px 6px;
+            font-size: 11px;
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+            border: none;
         }
         /* Compact Time Inputs */
         .timecode-inputs {
@@ -364,28 +372,8 @@
 
         <!-- Video Player + Editor -->
         <section class="panel video-editor">
-            <div class="video-container">
-                <video id="video-player" playsinline>
-                    Your browser does not support HTML5 video.
-                </video>
-                <div class="subtitle-overlay" id="subtitle-overlay"></div>
-                <div class="video-placeholder" id="video-placeholder">
-                    <div class="placeholder-content">
-                        <i class="bi bi-film" style="font-size: 64px;"></i>
-                        <p>No video loaded</p>
-                        <p class="placeholder-hint">Click "Upload Movie" to add a video</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Controls Below Video -->
+            <!-- Controls Inside -->
             <div class="video-controls" id="video-controls">
-                <div class="progress-bar-container">
-                    <div class="progress-bar" id="progress-bar">
-                        <div class="progress-played" id="progress-played"></div>
-                        <div class="progress-buffered" id="progress-buffered"></div>
-                    </div>
-                    <div class="time-display" id="time-display">0:00 / 0:00</div>
-                </div>
                 <div class="controls-row">
                     <button class="control-btn" id="play-pause-btn" title="Play/Pause">▶</button>
                     <button class="control-btn" id="stop-btn" title="Stop">⏹</button>
@@ -398,6 +386,26 @@
                         <option value="1.5">1.5x</option>
                         <option value="2">2x</option>
                     </select>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progress-bar">
+                        <div class="progress-played" id="progress-played"></div>
+                        <div class="progress-buffered" id="progress-buffered"></div>
+                    </div>
+                    <div class="time-display" id="time-display">0:00 / 0:00</div>
+                </div>
+            </div>
+            <div class="video-container">
+                <video id="video-player" playsinline>
+                    Your browser does not support HTML5 video.
+                </video>
+                <div class="subtitle-overlay" id="subtitle-overlay"></div>
+                <div class="video-placeholder" id="video-placeholder">
+                    <div class="placeholder-content">
+                        <i class="bi bi-film" style="font-size: 64px;"></i>
+                        <p>No video loaded</p>
+                        <p class="placeholder-hint">Click "Upload Movie" to add a video</p>
+                    </div>
                 </div>
             </div>
 
