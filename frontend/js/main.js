@@ -436,12 +436,14 @@ const App = (function() {
         const videoInput = document.getElementById('video-input');
         
         if (videoUploadZone && videoInput) {
-            // Direct click to trigger file input
+            // Debug click
             videoUploadZone.addEventListener('click', function() {
+                console.log('Video upload clicked');
                 videoInput.click();
             });
             // File input change
             videoInput.addEventListener('change', function(e) {
+                console.log('Video input changed', e.target.files);
                 if (e.target.files && e.target.files.length > 0) {
                     handleVideoUpload(e.target.files);
                 }
