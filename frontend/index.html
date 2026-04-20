@@ -372,29 +372,6 @@
 
         <!-- Video Player + Editor -->
         <section class="panel video-editor">
-            <!-- Controls Inside -->
-            <div class="video-controls" id="video-controls">
-                <div class="controls-row">
-                    <button class="control-btn" id="play-pause-btn" title="Play/Pause">▶</button>
-                    <button class="control-btn" id="stop-btn" title="Stop">⏹</button>
-                    <button class="control-btn" id="rewind-btn" title="Rewind 10s">⏪</button>
-                    <button class="control-btn" id="forward-btn" title="Forward 10s">⏩</button>
-                    <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.1" value="1" title="Volume">
-                    <select class="speed-selector" id="speed-selector" title="Speed">
-                        <option value="0.5">0.5x</option>
-                        <option value="1" selected>1x</option>
-                        <option value="1.5">1.5x</option>
-                        <option value="2">2x</option>
-                    </select>
-                </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" id="progress-bar">
-                        <div class="progress-played" id="progress-played"></div>
-                        <div class="progress-buffered" id="progress-buffered"></div>
-                    </div>
-                    <div class="time-display" id="time-display">0:00 / 0:00</div>
-                </div>
-            </div>
             <div class="video-container">
                 <video id="video-player" playsinline>
                     Your browser does not support HTML5 video.
@@ -405,6 +382,29 @@
                         <i class="bi bi-film" style="font-size: 64px;"></i>
                         <p>No video loaded</p>
                         <p class="placeholder-hint">Click "Upload Movie" to add a video</p>
+                    </div>
+                </div>
+                <!-- Controls Inside -->
+                <div class="video-controls" id="video-controls">
+                    <div class="controls-row">
+                        <button class="control-btn" id="play-pause-btn" title="Play/Pause">▶</button>
+                        <button class="control-btn" id="stop-btn" title="Stop">⏹</button>
+                        <button class="control-btn" id="rewind-btn" title="Rewind 10s">⏪</button>
+                        <button class="control-btn" id="forward-btn" title="Forward 10s">⏩</button>
+                        <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.1" value="1" title="Volume">
+                        <select class="speed-selector" id="speed-selector" title="Speed">
+                            <option value="0.5">0.5x</option>
+                            <option value="1" selected>1x</option>
+                            <option value="1.5">1.5x</option>
+                            <option value="2">2x</option>
+                        </select>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="progress-bar">
+                            <div class="progress-played" id="progress-played"></div>
+                            <div class="progress-buffered" id="progress-buffered"></div>
+                        </div>
+                        <div class="time-display" id="time-display">0:00 / 0:00</div>
                     </div>
                 </div>
             </div>
