@@ -31,8 +31,8 @@
             min-height: 0;
         }
         .panel.subtitle-list {
-            flex: 1;
-            min-height: 150px;
+            flex: 0 0 180px;
+            min-height: 180px;
         }
         .upload-bar {
             display: flex;
@@ -105,6 +105,39 @@
             align-items: center;
             justify-content: center;
             background: var(--bg-secondary);
+        }
+        /* Compact Time Inputs */
+        .timecode-inputs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        .time-row {
+            display: flex;
+            gap: 12px;
+            flex: 1;
+        }
+        .time-group {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .time-group label {
+            font-size: 12px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+        .timecode {
+            flex: 1;
+            padding: 6px 8px;
+            font-size: 13px;
+            width: 100%;
+        }
+        .subtitle-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
         }
         
         /* Mobile Responsive */
@@ -238,14 +271,14 @@
     <main class="app-container">
         <!-- Quick Upload Bar -->
         <div class="upload-bar">
-            <div class="upload-zone" id="video-upload-zone">
+            <label class="upload-zone" for="video-input">
                 <span><i class="bi bi-film"></i> Upload Movie</span>
-                <input type="file" id="video-input" accept="video/mp4,video/webm,video/quicktime">
-            </div>
-            <div class="upload-zone" id="subtitle-upload-zone">
+            </label>
+            <input type="file" id="video-input" accept="video/mp4,video/webm,video/quicktime" style="display:none">
+            <label class="upload-zone" for="subtitle-input">
                 <span><i class="bi bi-file-text"></i> Upload SRT</span>
-                <input type="file" id="subtitle-input" accept=".srt">
-            </div>
+            </label>
+            <input type="file" id="subtitle-input" accept=".srt" style="display:none">
         </div>
 
         <!-- Video Player + Editor -->
@@ -308,44 +341,20 @@
                 
                 <div class="current-subtitle">
                     <div class="timecode-inputs">
-                        <div class="timecode-group">
-                            <label>Start</label>
-                            <div class="timecode-control">
-                                <button class="time-btn" onclick="adjustTime('start-time', -1000)">-</button>
+                        <div class="time-row">
+                            <div class="time-group">
+                                <label>Start:</label>
                                 <input type="text" id="start-time" class="timecode" placeholder="00:00:00,000">
-                                <button class="time-btn" onclick="adjustTime('start-time', 1000)">+</button>
                             </div>
-                            <div class="time-adjust-btns">
-                                <button class="tiny-btn" onclick="adjustTime('start-time', -100)">-100</button>
-                                <button class="tiny-btn" onclick="adjustTime('start-time', -50)">-50</button>
-                                <button class="tiny-btn" onclick="adjustTime('start-time', -10)">-10</button>
-                                <button class="tiny-btn" onclick="adjustTime('start-time', 10)">+10</button>
-                                <button class="tiny-btn" onclick="adjustTime('start-time', 50)">+50</button>
-                                <button class="tiny-btn" onclick="adjustTime('start-time', 100)">+100</button>
-                            </div>
-                        </div>
-                        <div class="timecode-group">
-                            <label>End</label>
-                            <div class="timecode-control">
-                                <button class="time-btn" onclick="adjustTime('end-time', -1000)">-</button>
+                            <div class="time-group">
+                                <label>End:</label>
                                 <input type="text" id="end-time" class="timecode" placeholder="00:00:00,000">
-                                <button class="time-btn" onclick="adjustTime('end-time', 1000)">+</button>
-                            </div>
-                            <div class="time-adjust-btns">
-                                <button class="tiny-btn" onclick="adjustTime('end-time', -100)">-100</button>
-                                <button class="tiny-btn" onclick="adjustTime('end-time', -50)">-50</button>
-                                <button class="tiny-btn" onclick="adjustTime('end-time', -10)">-10</button>
-                                <button class="tiny-btn" onclick="adjustTime('end-time', 10)">+10</button>
-                                <button class="tiny-btn" onclick="adjustTime('end-time', 50)">+50</button>
-                                <button class="tiny-btn" onclick="adjustTime('end-time', 100)">+100</button>
                             </div>
                         </div>
                     </div>
                     <textarea id="subtitle-text" placeholder="Enter subtitle text..."></textarea>
                     <div class="subtitle-actions">
                         <button id="save-subtitle-btn" class="btn-primary btn-sm">Save</button>
-                        <button id="split-subtitle-btn" class="btn-secondary btn-sm">Split</button>
-                        <button id="merge-subtitle-btn" class="btn-secondary btn-sm">Merge</button>
                     </div>
                 </div>
 
