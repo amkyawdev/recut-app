@@ -18,6 +18,67 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Myanmar+Text&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 64px);
+            padding: 16px;
+            gap: 16px;
+        }
+        .panel.video-editor {
+            flex: 2;
+            min-height: 0;
+        }
+        .panel.subtitle-list {
+            flex: 1;
+            min-height: 200px;
+        }
+        .upload-bar {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            padding: 16px;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+        }
+        .upload-bar .upload-zone {
+            flex: 1;
+            max-width: 280px;
+            padding: 20px 32px;
+            background: var(--bg-tertiary);
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .upload-bar .upload-zone:hover {
+            border-color: var(--primary);
+            background: var(--bg-hover);
+        }
+        .upload-bar .upload-zone input {
+            display: none;
+        }
+        .upload-bar .upload-zone span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .panel {
+            flex: 1;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
 </head>
 <body>
     <header class="app-header">
@@ -103,39 +164,19 @@
     </div>
 
     <main class="app-container">
-        <!-- Left Panel: File Manager -->
-        <aside class="panel file-manager">
-            <div class="panel-header">
-                <h2>Files</h2>
-                <button id="add-files-btn" class="btn-icon" title="Add Files">+</button>
+        <!-- Quick Upload Bar -->
+        <div class="upload-bar">
+            <div class="upload-zone" id="video-upload-zone">
+                <span><i class="bi bi-film"></i> Upload Movie</span>
+                <input type="file" id="video-input" accept="video/mp4,video/webm,video/quicktime">
             </div>
-            
-            <div class="upload-section">
-                <div class="upload-zone" id="video-upload-zone">
-                    <span class="upload-icon">📹</span>
-                    <span>Drop video here</span>
-                    <input type="file" id="video-input" accept="video/mp4,video/webm,video/quicktime">
-                </div>
-                <div class="upload-zone" id="subtitle-upload-zone">
-                    <span class="upload-icon">📄</span>
-                    <span>Drop SRT here</span>
-                    <input type="file" id="subtitle-input" accept=".srt">
-                </div>
+            <div class="upload-zone" id="subtitle-upload-zone">
+                <span><i class="bi bi-file-text"></i> Upload SRT</span>
+                <input type="file" id="subtitle-input" accept=".srt">
             </div>
+        </div>
 
-            <div class="file-list" id="file-list">
-                <div class="file-category">
-                    <h3>Videos</h3>
-                    <ul id="video-list"></ul>
-                </div>
-                <div class="file-category">
-                    <h3>Subtitles</h3>
-                    <ul id="subtitle-list"></ul>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Center Panel: Video Player + Editor -->
+        <!-- Video Player + Editor -->
         <section class="panel video-editor">
             <div class="video-container">
                 <video id="video-player" playsinline>
@@ -144,9 +185,9 @@
                 <div class="subtitle-overlay" id="subtitle-overlay"></div>
                 <div class="video-placeholder" id="video-placeholder">
                     <div class="placeholder-content">
-                        <span class="placeholder-icon">🎬</span>
+                        <i class="bi bi-film" style="font-size: 64px;"></i>
                         <p>No video loaded</p>
-                        <p class="placeholder-hint">Drop a video file or click to upload</p>
+                        <p class="placeholder-hint">Click "Upload Movie" to add a video</p>
                     </div>
                 </div>
                 <!-- Custom Controls -->
@@ -328,10 +369,10 @@
             </div>
         </section>
 
-        <!-- Right Panel: Subtitle List -->
+        <!-- Subtitle List (Below Video) -->
         <aside class="panel subtitle-list">
             <div class="panel-header">
-                <h2>Subtitles</h2>
+                <h2><i class="bi bi-list-ol"></i> Subtitles</h2>
                 <div class="subtitle-info">
                     <span id="subtitle-count">0</span> lines
                 </div>
